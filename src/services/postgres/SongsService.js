@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
-const NotFoundError = require('../../exceptions/NotFoundError');
+// const NotFoundError = require('../../exceptions/NotFoundError');
 
 class SongsService {
   constructor() {
@@ -20,7 +20,7 @@ class SongsService {
     const updatedAt = insertedAt;
 
     const query = {
-      text: 'INSERT INTO songs VALUES($1, $2, ) RETURNING id',
+      text: 'INSERT INTO songs VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
       values: [id, title, year, performer, genre, duration, insertedAt, updatedAt],
     };
 

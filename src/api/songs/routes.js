@@ -4,33 +4,38 @@ module.exports = (handler) => [
     method: 'POST',
     path: '/songs',
     handler: handler.postSongHandler,
+    options: {
+      cors: {
+        origin: ['*'],
+      },
+    },
   },
 
   // menampilkan seluruh lagu
-  {
-    method: 'GET',
-    path: '/songs',
-    handler: handler.getSongsHandler,
-  },
+  // {
+  //   method: 'GET',
+  //   path: '/songs',
+  //   handler: handler.getSongsHandler,
+  // },
 
-  // menampilkan detail lagu
-  {
-    method: 'GET',
-    path: '/songs/{songId}',
-    handler: handler.getSongByIdHandler,
-  },
+  // // menampilkan detail lagu
+  // {
+  //   method: 'GET',
+  //   path: '/songs/{songId}',
+  //   handler: handler.getSongByIdHandler,
+  // },
 
-  // mengubah data lagu
-  {
-    method: 'PUT',
-    path: '/songs/{songId}',
-    handler: handler.putSongByIdHandler,
-  },
+  // // mengubah data lagu
+  // {
+  //   method: 'PUT',
+  //   path: '/songs/{songId}',
+  //   handler: handler.putSongByIdHandler,
+  // },
 
-  // menghapus data lagu
-  {
-    method: 'DELETE',
-    path: '/songs/{songId}',
-    handler: handler.deleteSongByIdHandler,
-  },
+  // // menghapus data lagu
+  // {
+  //   method: 'DELETE',
+  //   path: '/songs/{songId}',
+  //   handler: handler.deleteSongByIdHandler,
+  // },
 ];

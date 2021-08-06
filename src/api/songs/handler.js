@@ -4,6 +4,8 @@ class SongsHandler {
   constructor(service, validator) {
     this.service = service;
     this.validator = validator;
+
+    this.postSongHandler = this.postSongHandler.bind(this);
   }
 
   async postSongHandler(request, h) {
