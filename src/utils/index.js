@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const ClientError = require('../exceptions/ClientError');
+
 const mapDBToModel = ({
   id,
   title,
@@ -19,4 +21,24 @@ const mapDBToModel = ({
   updatedAt: updated_at,
 });
 
-module.exports = { mapDBToModel };
+const sendErrorResponse = (error, h) => {
+  if (error instanceof ClientError) {
+    const response = h.response({
+      status: 'fail',
+      message: error.message,
+    });
+    response.code(error.statusCode);
+    return response;
+  }
+
+  // server error
+  const response = h.response({
+    status: 'error',
+    message: 'Server error',
+  });
+  response.code(500);
+  console.error(error);
+  return response;
+};
+
+module.exports = { mapDBToModel, sendErrorResponse };
