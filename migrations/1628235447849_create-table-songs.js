@@ -22,9 +22,11 @@ exports.up = (pgm) => {
     },
     genre: {
       type: 'TEXT',
+      notNull: true,
     },
     duration: {
       type: 'INTEGER',
+      notNull: true,
     },
     inserted_at: {
       type: 'TEXT',
