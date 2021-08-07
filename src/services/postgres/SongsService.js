@@ -30,7 +30,8 @@ class SongsService {
         genre,
         duration,
         insertedAt,
-        updatedAt],
+        updatedAt,
+      ],
     };
 
     const result = await this.pool.query(query);
@@ -48,19 +49,14 @@ class SongsService {
   }
 
   async getSongById(id) {
-    console.log(id);
     const query = {
       text: 'SELECT * FROM songs WHERE id = $1',
       values: [id],
     };
 
-    console.log(query);
-
     const result = await this.pool.query(query);
 
-    console.log(result);
-
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Song not found');
     }
 
