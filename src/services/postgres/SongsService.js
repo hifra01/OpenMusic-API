@@ -36,7 +36,7 @@ class SongsService {
 
     const result = await this.pool.query(query);
 
-    if (!result.rows[0].id) {
+    if (!result.rowCount) {
       throw new InvariantError('Failed to add song');
     }
 
@@ -86,7 +86,7 @@ class SongsService {
 
     const result = await this.pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Failed to update song. Id not found');
     }
   }
@@ -99,7 +99,7 @@ class SongsService {
 
     const result = await this.pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Failed to delete song. Id not found');
     }
   }

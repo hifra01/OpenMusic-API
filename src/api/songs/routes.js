@@ -4,11 +4,6 @@ module.exports = (handler) => [
     method: 'POST',
     path: '/songs',
     handler: handler.postSongHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
   },
 
   // menampilkan seluruh lagu
@@ -16,11 +11,6 @@ module.exports = (handler) => [
     method: 'GET',
     path: '/songs',
     handler: handler.getSongsHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
   },
 
   // menampilkan detail lagu
@@ -28,11 +18,6 @@ module.exports = (handler) => [
     method: 'GET',
     path: '/songs/{songId}',
     handler: handler.getSongByIdHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
   },
 
   // mengubah data lagu
@@ -40,11 +25,6 @@ module.exports = (handler) => [
     method: 'PUT',
     path: '/songs/{songId}',
     handler: handler.putSongByIdHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
   },
 
   // menghapus data lagu
@@ -52,10 +32,5 @@ module.exports = (handler) => [
     method: 'DELETE',
     path: '/songs/{songId}',
     handler: handler.deleteSongByIdHandler,
-    options: {
-      cors: {
-        origin: ['*'],
-      },
-    },
   },
 ];
