@@ -1,4 +1,4 @@
-module.exports = (handler) => [
+const routes = (handler) => [
   // menyimpan lagu
   {
     method: 'POST',
@@ -34,3 +34,5 @@ module.exports = (handler) => [
     handler: handler.deleteSongByIdHandler,
   },
 ];
+
+module.exports = routes;
