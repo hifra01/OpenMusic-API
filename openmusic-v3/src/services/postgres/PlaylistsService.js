@@ -5,9 +5,10 @@ const NotFoundError = require('../../exceptions/NotFoundError');
 const AuthorizationError = require('../../exceptions/AuthorizationError');
 
 class PlaylistsService {
-  constructor(collaborationsService) {
+  constructor(collaborationsService, cacheService) {
     this.pool = new Pool();
     this.collaborationsService = collaborationsService;
+    this.cacheService = cacheService;
   }
 
   async verifyPlaylistOwner(playlistId, userId) {
@@ -98,6 +99,7 @@ class PlaylistsService {
     };
 
     await this.pool.query(query);
+    await this.cacheService.delete(`playlistsongs:${playlistId}`);
   }
 
   async deletePlaylistById(playlistId) {
@@ -130,18 +132,27 @@ class PlaylistsService {
     if (!result.rowCount) {
       throw new InvariantError('Failed to add song to playlist.');
     }
+
+    await this.cacheService.delete(`playlistsongs:${playlistId}`);
   }
 
   async getSongsByPlaylistId(playlistId) {
-    const query = {
-      text: `SELECT songs.id, songs.title, songs.performer FROM playlistsongs
-      JOIN songs on playlistsongs.song_id = songs.id
-      WHERE playlistsongs.playlist_id = $1`,
-      values: [playlistId],
-    };
+    try {
+      const result = await this.cacheService.get(`playlistsongs:${playlistId}`);
+      return JSON.parse(result);
+    } catch (error) {
+      const query = {
+        text: `SELECT songs.id, songs.title, songs.performer FROM playlistsongs
+        JOIN songs on playlistsongs.song_id = songs.id
+        WHERE playlistsongs.playlist_id = $1`,
+        values: [playlistId],
+      };
 
-    const result = await this.pool.query(query);
-    return result.rows;
+      const result = await this.pool.query(query);
+      await this.cacheService.set(`playlistsongs:${playlistId}`, JSON.stringify(result.rows));
+
+      return result.rows;
+    }
   }
 
   async deleteSongFromPlaylist({
@@ -158,6 +169,8 @@ class PlaylistsService {
     if (!result.rowCount) {
       throw new InvariantError('Failed to delete song from playlist.');
     }
+
+    await this.cacheService.delete(`playlistsongs:${playlistId}`);
   }
 }
 
