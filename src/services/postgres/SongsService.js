@@ -26,13 +26,11 @@ class SongsService {
     title,
     year,
     performer,
-    genre,
-    duration,
+    genre = '',
+    duration = 0,
   }) {
     const id = `song-${nanoid(16)}`;
     const insertedAt = new Date().toISOString();
-    const updatedAt = insertedAt;
-
     const query = {
       text: 'INSERT INTO songs VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
       values: [
@@ -43,7 +41,7 @@ class SongsService {
         genre,
         duration,
         insertedAt,
-        updatedAt,
+        insertedAt,
       ],
     };
 
@@ -80,8 +78,8 @@ class SongsService {
     title,
     year,
     performer,
-    genre,
-    duration,
+    genre = '',
+    duration = 0,
   }) {
     const updatedAt = new Date().toISOString();
     const query = {
