@@ -1,11 +1,11 @@
 {
   "name": "openmusic-api",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Submission Dicoding Belajar Fundamental Aplikasi Back-End",
   "main": "index.js",
   "scripts": {
-    "start-dev": "nodemon ./src/server.js",
-    "lint": "eslint ./src",
+    "start-dev": "nodemon src/server.js",
+    "lint": "eslint src",
     "migrate": "node-pg-migrate"
   },
   "repository": {
