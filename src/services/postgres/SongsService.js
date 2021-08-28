@@ -9,17 +9,28 @@ class SongsService {
     this.pool = new Pool();
   }
 
+  async validateSong(songId) {
+    const query = {
+      text: 'SELECT id FROM songs WHERE id = $1',
+      values: [songId],
+    };
+
+    const result = await this.pool.query(query);
+
+    if (!result.rowCount) {
+      throw new InvariantError('Invalid song id');
+    }
+  }
+
   async addSong({
     title,
     year,
     performer,
-    genre,
-    duration,
+    genre = '',
+    duration = 0,
   }) {
     const id = `song-${nanoid(16)}`;
     const insertedAt = new Date().toISOString();
-    const updatedAt = insertedAt;
-
     const query = {
       text: 'INSERT INTO songs VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
       values: [
@@ -30,13 +41,13 @@ class SongsService {
         genre,
         duration,
         insertedAt,
-        updatedAt,
+        insertedAt,
       ],
     };
 
     const result = await this.pool.query(query);
 
-    if (!result.rows[0].id) {
+    if (!result.rowCount) {
       throw new InvariantError('Failed to add song');
     }
 
@@ -67,8 +78,8 @@ class SongsService {
     title,
     year,
     performer,
-    genre,
-    duration,
+    genre = '',
+    duration = 0,
   }) {
     const updatedAt = new Date().toISOString();
     const query = {
@@ -86,7 +97,7 @@ class SongsService {
 
     const result = await this.pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Failed to update song. Id not found');
     }
   }
@@ -99,7 +110,7 @@ class SongsService {
 
     const result = await this.pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Failed to delete song. Id not found');
     }
   }
