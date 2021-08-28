@@ -51,7 +51,7 @@ const init = async () => {
   const cacheService = new CacheService();
   const usersService = new UsersService();
   const collaborationsService = new CollaborationsService(cacheService);
-  const songsService = new SongsService();
+  const songsService = new SongsService(cacheService);
   const authenticationsService = new AuthenticationsService();
   const playlistsService = new PlaylistsService(collaborationsService, cacheService);
   const storageService = new StorageService(path.resolve(__dirname, 'api/uploads/file/pictures'));
