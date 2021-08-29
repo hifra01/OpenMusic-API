@@ -1,11 +1,11 @@
 {
   "name": "openmusic-api",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Submission Dicoding Belajar Fundamental Aplikasi Back-End",
   "main": "index.js",
   "scripts": {
-    "start-dev": "nodemon ./src/server.js",
-    "lint": "eslint ./src",
+    "start-dev": "nodemon src/server.js",
+    "lint": "eslint src",
     "migrate": "node-pg-migrate"
   },
   "repository": {
@@ -21,13 +21,16 @@
   "homepage": "https://github.com/hifra01/OpenMusic-API#readme",
   "dependencies": {
     "@hapi/hapi": "^20.1.5",
+    "@hapi/inert": "^6.0.3",
     "@hapi/jwt": "^2.1.0",
+    "amqplib": "^0.8.0",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "joi": "^17.4.2",
     "nanoid": "^3.1.23",
     "node-pg-migrate": "^5.10.0",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "redis": "^3.1.2"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

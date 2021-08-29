@@ -4,8 +4,9 @@ const AuthorizationError = require('../../exceptions/AuthorizationError');
 const InvariantError = require('../../exceptions/InvariantError');
 
 class CollaborationsService {
-  constructor() {
+  constructor(cacheService) {
     this.pool = new Pool();
+    this.cacheService = cacheService;
   }
 
   async verifyCollaborator(playlistId, userId) {
@@ -35,6 +36,8 @@ class CollaborationsService {
       throw new InvariantError('Failed to add collaborator');
     }
 
+    await this.cacheService.delete(`playlists:${userId}`);
+
     return result.rows[0].id;
   }
 
@@ -49,6 +52,8 @@ class CollaborationsService {
     if (!result.rowCount) {
       throw new InvariantError('Failed to delete collaborator.');
     }
+
+    await this.cacheService.delete(`playlists:${userId}`);
   }
 }
 
